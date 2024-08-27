@@ -3,255 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday</title>
+    <title>Celebration Button</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Sen&display=swap');
-
-        html, body {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            font-size: 10vw;
-            background-color: #ddf0e9;
-            overflow: hidden; /* Prevent scrollbars */
+        :root {
+            --primary-color: #D83344;
+            --background-color: #f5f5f7; /* Fallback color */
+            --text-color: #333333;
         }
 
         body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('White.jpg'); /* Ensure the image path is correct */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: var(--background-color); /* Fallback color */
+            color: var(--text-color);
             display: flex;
             justify-content: center;
-            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
         }
 
-        h1, h2 {
+        .cont {
             text-align: center;
-            margin: 0; 
-            font-family: 'Sen', sans-serif;
+            z-index: 2; /* Ensure content is above the background image */
         }
 
-        #confetti {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
+        .celebrate-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        .celebrate-btn:hover {
+            background-color: #C71729;
+        }
+
+        .celebrate-btn:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
-    <h2>Happy <br> Birrrrrthday</h2>
-    <h1>(name)</h1>
-    <canvas id="confetti"></canvas>
+    <div class="cont">
+        <button id="celebrateBtn" class="celebrate-btn">Click Here for Birthday Wishes</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var speed = 50,
-                duration = 1.0 / speed,
-                confettiRibbonCount = 11,
-                ribbonPaperCount = 30,
-                ribbonPaperDist = 8.0,
-                ribbonPaperThick = 8.0,
-                confettiPaperCount = 95,
-                DEG_TO_RAD = Math.PI / 180,
-                colors = [
-                    ["#df0049", "#660671"],
-                    ["#00e857", "#005291"],
-                    ["#2bebbc", "#05798a"],
-                    ["#ffd200", "#b06c00"]
-                ];
+        const celebrateBtn = document.getElementById('celebrateBtn');
 
-            function Vector2(_x, _y) {
-                this.x = _x;
-                this.y = _y;
-                this.Length = () => Math.sqrt(this.SqrLength());
-                this.SqrLength = () => this.x * this.x + this.y * this.y;
-                this.Add = (_vec) => { this.x += _vec.x; this.y += _vec.y; };
-                this.Sub = (_vec) => { this.x -= _vec.x; this.y -= _vec.y; };
-                this.Div = (_f) => { this.x /= _f; this.y /= _f; };
-                this.Mul = (_f) => { this.x *= _f; this.y *= _f; };
-                this.Normalize = () => {
-                    var sqrLen = this.SqrLength();
-                    if (sqrLen !== 0) {
-                        var factor = 1.0 / Math.sqrt(sqrLen);
-                        this.x *= factor;
-                        this.y *= factor;
-                    }
-                };
-                this.Normalized = () => {
-                    var sqrLen = this.SqrLength();
-                    if (sqrLen !== 0) {
-                        var factor = 1.0 / Math.sqrt(sqrLen);
-                        return new Vector2(this.x * factor, this.y * factor);
-                    }
-                    return new Vector2(0, 0);
-                };
-            }
+        celebrateBtn.addEventListener('click', () => {
+            // Trigger confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
 
-            function ConfettiPaper(_x, _y) {
-                this.pos = new Vector2(_x, _y);
-                this.rotationSpeed = Math.random() * 600 + 800;
-                this.angle = DEG_TO_RAD * Math.random() * 360;
-                this.rotation = DEG_TO_RAD * Math.random() * 360;
-                this.cosA = 1.0;
-                this.size = 5.0;
-                this.oscillationSpeed = Math.random() * 1.5 + 0.5;
-                this.xSpeed = 40.0;
-                this.ySpeed = Math.random() * 60 + 50.0;
-                this.corners = [];
-                this.time = Math.random();
-                var ci = Math.round(Math.random() * (colors.length - 1));
-                this.frontColor = colors[ci][0];
-                this.backColor = colors[ci][1];
-                for (var i = 0; i < 4; i++) {
-                    var dx = Math.cos(this.angle + DEG_TO_RAD * (i * 90 + 45));
-                    var dy = Math.sin(this.angle + DEG_TO_RAD * (i * 90 + 45));
-                    this.corners[i] = new Vector2(dx, dy);
-                }
-                this.Update = (_dt) => {
-                    this.time += _dt;
-                    this.rotation += this.rotationSpeed * _dt;
-                    this.cosA = Math.cos(DEG_TO_RAD * this.rotation);
-                    this.pos.x += Math.cos(this.time * this.oscillationSpeed) * this.xSpeed * _dt;
-                    this.pos.y += this.ySpeed * _dt;
-                    if (this.pos.y > ConfettiPaper.bounds.y) {
-                        this.pos.x = Math.random() * ConfettiPaper.bounds.x;
-                        this.pos.y = 0;
-                    }
-                };
-                this.Draw = (_g) => {
-                    _g.fillStyle = this.cosA > 0 ? this.frontColor : this.backColor;
-                    _g.beginPath();
-                    _g.moveTo((this.pos.x + this.corners[0].x * this.size) * window.devicePixelRatio, 
-                              (this.pos.y + this.corners[0].y * this.size * this.cosA) * window.devicePixelRatio);
-                    for (var i = 1; i < 4; i++) {
-                        _g.lineTo((this.pos.x + this.corners[i].x * this.size) * window.devicePixelRatio, 
-                                  (this.pos.y + this.corners[i].y * this.size * this.cosA) * window.devicePixelRatio);
-                    }
-                    _g.closePath();
-                    _g.fill();
-                };
-            }
-
-            function ConfettiRibbon(_x, _y, _count, _dist, _thickness, _angle, _mass, _drag) {
-                this.particleDist = _dist;
-                this.particleCount = _count;
-                this.particleMass = _mass;
-                this.particleDrag = _drag;
-                this.particles = [];
-                var ci = Math.round(Math.random() * (colors.length - 1));
-                this.frontColor = colors[ci][0];
-                this.backColor = colors[ci][1];
-                this.xOff = Math.cos(DEG_TO_RAD * _angle) * _thickness;
-                this.yOff = Math.sin(DEG_TO_RAD * _angle) * _thickness;
-                this.position = new Vector2(_x, _y);
-                this.prevPosition = new Vector2(_x, _y);
-                this.velocityInherit = Math.random() * 2 + 4;
-                this.time = Math.random() * 100;
-                this.oscillationSpeed = Math.random() * 2 + 2;
-                this.oscillationDistance = Math.random() * 40 + 40;
-                this.ySpeed = Math.random() * 40 + 80;
-                for (var i = 0; i < this.particleCount; i++) {
-                    this.particles[i] = new EulerMass(_x, _y - i * this.particleDist, this.particleMass, this.particleDrag);
-                }
-                this.Update = (_dt) => {
-                    this.time += _dt * this.oscillationSpeed;
-                    this.position.y += this.ySpeed * _dt;
-                    this.position.x += Math.cos(this.time) * this.oscillationDistance * _dt;
-                    this.particles[0].position = this.position;
-                    var dX = this.prevPosition.x - this.position.x;
-                    var dY = this.prevPosition.y - this.position.y;
-                    var delta = Math.sqrt(dX * dX + dY * dY);
-                    this.prevPosition = new Vector2(this.position.x, this.position.y);
-                    for (var i = 1; i < this.particleCount; i++) {
-                        var dirP = Vector2.Sub(this.particles[i - 1].position, this.particles[i].position);
-                        dirP.Normalize();
-                        dirP.Mul((delta / _dt) * this.velocityInherit);
-                        this.particles[i].AddForce(dirP);
-                    }
-                    for (var i = 1; i < this.particleCount; i++) {
-                        this.particles[i].Integrate(_dt);
-                    }
-                    for (var i = 1; i < this.particleCount; i++) {
-                        var rp2 = new Vector2(this.particles[i].position.x, this.particles[i].position.y);
-                        rp2.Sub(this.particles[i - 1].position);
-                        rp2.Normalize();
-                        rp2.Mul(this.particleDist);
-                        rp2.Add(this.particles[i - 1].position);
-                        this.particles[i].position = rp2;
-                    }
-                    if (this.position.y > ConfettiRibbon.bounds.y + this.particleDist * this.particleCount) {
-                        this.Reset();
-                    }
-                };
-                this.Reset = () => {
-                    this.position.y = -Math.random() * ConfettiRibbon.bounds.y;
-                    this.position.x = Math.random() * ConfettiRibbon.bounds.x;
-                    this.prevPosition = new Vector2(this.position.x, this.position.y);
-                    for (var i = 0; i < this.particleCount; i++) {
-                        this.particles[i].position = new Vector2(this.position.x, this.position.y - i * this.particleDist);
-                    }
-                };
-                this.Draw = (_g) => {
-                    _g.strokeStyle = this.frontColor;
-                    _g.lineWidth = this.particleDist / 2.0;
-                    _g.beginPath();
-                    _g.moveTo((this.particles[0].position.x + this.xOff) * window.devicePixelRatio, 
-                              (this.particles[0].position.y + this.yOff) * window.devicePixelRatio);
-                    for (var i = 1; i < this.particleCount; i++) {
-                        _g.lineTo((this.particles[i].position.x + this.xOff) * window.devicePixelRatio, 
-                                  (this.particles[i].position.y + this.yOff) * window.devicePixelRatio);
-                    }
-                    _g.stroke();
-                };
-            }
-
-            function update() {
-                confettiContext.clearRect(0, 0, confettiWidth * window.devicePixelRatio, confettiHeight * window.devicePixelRatio);
-                var now = performance.now();
-                var dt = (now - lastTime) / 1000;
-                lastTime = now;
-
-                confettiPapers.forEach(paper => paper.Update(dt));
-                confettiRibbons.forEach(ribbon => ribbon.Update(dt));
-
-                confettiPapers.forEach(paper => paper.Draw(confettiContext));
-                confettiRibbons.forEach(ribbon => ribbon.Draw(confettiContext));
-
-                requestAnimationFrame(update);
-            }
-
-            var confettiCanvas = document.getElementById("confetti");
-            var confettiContext = confettiCanvas.getContext("2d");
-            var confettiWidth = window.innerWidth;
-            var confettiHeight = window.innerHeight;
-            confettiCanvas.width = confettiWidth * window.devicePixelRatio;
-            confettiCanvas.height = confettiHeight * window.devicePixelRatio;
-
-            ConfettiPaper.bounds = { x: confettiWidth, y: confettiHeight };
-            ConfettiRibbon.bounds = { x: confettiWidth, y: confettiHeight };
-            var confettiPapers = [];
-            var confettiRibbons = [];
-
-            for (var i = 0; i < confettiPaperCount; i++) {
-                confettiPapers[i] = new ConfettiPaper(
-                    Math.random() * confettiWidth,
-                    Math.random() * confettiHeight
-                );
-            }
-            for (var i = 0; i < confettiRibbonCount; i++) {
-                confettiRibbons[i] = new ConfettiRibbon(
-                    Math.random() * confettiWidth,
-                    Math.random() * confettiHeight,
-                    ribbonPaperCount,
-                    ribbonPaperDist,
-                    ribbonPaperThick,
-                    Math.random() * 360,
-                    Math.random() * 2 + 2,
-                    Math.random() * 0.3
-                );
-            }
-
-            var lastTime = performance.now();
-            update();
+            // Button animation
+            celebrateBtn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                celebrateBtn.style.transform = 'scale(1)';
+                // Navigate to nina1.html
+                window.location.href = 'Nina1.html';
+            }, 100);
         });
     </script>
 </body>

@@ -1,83 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Wishes</title>
-  <style>
-    body {
-      margin: 0;
-      background-image: url('./Blue.jpg'); /* Ensure the path and file name are correct */
-      background-size: cover;
-      background-repeat: no-repeat;
-      padding: 20px;
-      font-family: sans-serif;
-      color: white; /* Default text color */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Cards</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #D83344;
+            --background-color: #f5f5f7;
+            --text-color: #333333;
+            --message-bg: rgba(0, 0, 0, 0.5);
+            --message-text-color: white;
+        }
 
-    h1, h4, p {
-      text-align: center;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
 
-    h1 {
-      color: #C8A2C8;
-    }
+        h1 {
+            color: #C8A2C8;
+            text-align: center;
+        }
 
-    h4 {
-      color: #C8A2C8;
-    }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
 
-    p {
-      font-size: 1.2rem;
-    }
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+            position: relative;
+        }
 
-    /* Additional styles to improve text visibility */
-    .message {
-      background-color: rgba(0, 0, 0, 0.5); /* Adds a dark background to make text more readable */
-      padding: 10px;
-      border-radius: 8px;
-      margin: 10px 0;
-    }
-  </style>
+        .card h3 {
+            margin: 0;
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        .card .wish {
+            display: none;
+            margin-top: 10px;
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        .card button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            margin-top: 10px;
+        }
+
+        .card button:hover {
+            background-color: #C71729;
+        }
+
+        .card button:active {
+            transform: scale(0.98);
+        }
+    </style>
 </head>
 <body>
-  <h1>Happiest Birthday To the Most Precious Human in Our Life</h1>
-  <p>Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</p>
+    <h1>Happiest Birthday To the Most Precious Human in Our Life</h1>
   
-  <div class="message">
-    <h4>SHILPA_MOM</h4>
-    <p>To my Dearest Daughter, Wishing you a Happy Birthday filled with moments that make your heart smile and memories that last a lifetime... Cheers to you ❤</p>
-  </div>
-  
-  <div class="message">
-    <h4>KEVIN</h4>
-    <p>Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</p>
-  </div>
-  
-  <div class="message">
-    <h4>SHERRY</h4>
-    <p>Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</p>
-  </div>
-  
-  <div class="message">
-    <h4>ELIZABETH</h4>
-    <p>Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</p>
-  </div>
-  
-  <div class="message">
-    <h4>BREANNA</h4>
-    <p>Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</p>
-  </div>
-  
-  <div class="message">
-    <h4>RASHI</h4>
-    <p>Dear Didi, Having you as my sister is the biggest blessing that I will never take for granted. Our bond has gotten closer over the years and together we have shed so many tears and laughs. Sometimes we talk and sometimes we don't but that doesn't matter because we know you are always there. There are times where we may fight and not always get along but one thing I do know is that I could not get through this journey we call life without you.... You are my sister and I love you And you can never be replaced. Happiest Birthday Big Sister ❤🧿</p>
-  </div>
-  
-  <div class="message">
-    <h4>KHUSHI</h4>
-    <p>Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</p>
-  </div>
-  
+    <div class="card-container">
+        <div class="card">
+            <h3>SHILPA_MOM</h3>
+            <div class="wish">To my Dearest Daughter, Wishing you a Happy Birthday filled with moments that make your heart smile and memories that last a lifetime... Cheers to you ❤</div>
+            <button class="toggle-btn">Show Wish</button>
+        </div>
+        <div class="card">
+            <h3>KEVIN</h3>
+            <div class="wish">Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</div>
+            <button class="toggle-btn">Show Wish</button>
+        </div>
+        <div class="card">
+            <h3>SHERRY</h3>
+            <div class="wish">Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</div>
+            <button class="toggle-btn">Show Wish</button>
+        </div>
+        <div class="card">
+            <h3>ELIZABETH</h3>
+            <div class="wish">Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</div>
+            <button class="toggle-btn">Show Wish</button>
+        </div>
+        <div class="card">
+            <h3>BREANNA</h3>
+            <div class="wish">Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</div>
+            <button class="toggle-btn">Show Wish</button>
+        </div>
+        <div class="card">
+            <h3>RASHI</h3>
+            <div class="wish">Dear Didi, Having you as my sister is the biggest blessing that I will never take for granted. Our bond has gotten closer over the years and together we have shed so many tears and laughs. Sometimes we talk and sometimes we don't but that doesn't matter because we know you are always there. There are times where we may fight and not always get along but one thing I do know is that I could not get through this journey we call life without you.... You are my sister and I love you And you can never be replaced. Happiest Birthday Big Sister ❤🧿</div>
+            <button class="toggle-btn">Show Wish</button>
+        </div>
+        <div class="card">
+            <h3>KHUSHI</h3>
+            <div class="wish">Your birthday wishes go here. Write a heartfelt message for the birthday person. You can also add images or decorations if you like.</div>
+            <button class="toggle-btn">Show Wish</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const wish = button.previousElementSibling;
+
+                // Hide all wishes
+                document.querySelectorAll('.wish').forEach(otherWish => {
+                    if (otherWish !== wish) {
+                        otherWish.style.display = 'none';
+                        otherWish.previousElementSibling.textContent = 'Show Wish';
+                    }
+                });
+
+                // Toggle the clicked wish
+                if (wish.style.display === 'none' || !wish.style.display) {
+                    wish.style.display = 'block';
+                    button.textContent = 'Hide Wish';
+
+                    // Trigger confetti when wish is shown
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                } else {
+                    wish.style.display = 'none';
+                    button.textContent = 'Show Wish';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
