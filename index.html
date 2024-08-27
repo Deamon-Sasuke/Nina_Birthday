@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-image: url('White.jpg'); /* Replace with the path to your background image */
+            background-image: url('White.jpg'); /* Ensure the image path is correct */
             background-size: cover;
             background-repeat: no-repeat;
             background-color: var(--background-color); /* Fallback color */
@@ -55,21 +55,21 @@
 </head>
 <body>
     <div class="cont">
-        <button id="celebrateBtn" class="celebrate-btn">Click Here for Birthday Wishes</button>
+        <button id="celebrateBtn" class="celebrate-btn" href="Nina1.html">Click Here for Birthday Wishes</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         const celebrateBtn = document.getElementById('celebrateBtn');
 
         celebrateBtn.addEventListener('click', () => {
-            // trigger confetti
+            // Trigger confetti
             confetti({
                 particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 }
             });
 
-            // button animation
+            // Button animation
             celebrateBtn.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 celebrateBtn.style.transform = 'scale(1)';
