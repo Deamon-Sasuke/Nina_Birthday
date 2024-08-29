@@ -58,7 +58,7 @@
             text-align: center;
             position: relative;
             box-sizing: border-box;
-            overflow-y: auto;
+
         }
 
         .card h3 {
@@ -69,6 +69,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+
         }
 
         .card h3 i {
@@ -81,6 +82,8 @@
             font-size: 1rem;
             color: var(--text-color);
             text-align: justify;
+            overflow-y: auto; /* Add scrollbar for long wishes */
+            max-height: 200px; /* Set maximum height for the wish message */
         }
 
         .card button {
@@ -254,6 +257,7 @@
         document.querySelectorAll('.toggle-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const wish = button.previousElementSibling;
+                const name = button.parentElement.querySelector('h3').textContent;
 
                 // Hide all wishes
                 document.querySelectorAll('.wish').forEach(otherWish => {
