@@ -53,12 +53,12 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 150%;
-            max-width: 250px;
+            width: 180%; /* Increased card width for a more 3D feel */
+            max-width: 300px; /* Increased card max-width for larger screens */
             text-align: center;
             position: relative;
             box-sizing: border-box;
-
+            transform: skewY(-5deg); /* Added skewY for a slight 3D effect */
         }
 
         .card h3 {
@@ -69,7 +69,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-
+            transform: skewY(5deg); /* Counter-skew for the h3 to align correctly */
         }
 
         .card h3 i {
@@ -84,6 +84,7 @@
             text-align: justify;
             overflow-y: auto; /* Add scrollbar for long wishes */
             max-height: 200px; /* Set maximum height for the wish message */
+            transform: skewY(5deg); /* Counter-skew for the wish to align correctly */
         }
 
         .card button {
@@ -117,10 +118,12 @@
                 width: 100%;
                 max-width: 90%;
                 padding: 15px;
+                transform: skewY(-3deg); /* Adjusted skew for smaller screens */
             }
 
             .card h3 {
                 font-size: 1.25rem;
+                transform: skewY(3deg); /* Adjusted skew for smaller screens */
             }
 
             .card h3 i {
@@ -129,6 +132,7 @@
 
             .card .wish {
                 font-size: 0.875rem;
+                transform: skewY(3deg); /* Adjusted skew for smaller screens */
             }
 
             .card button {
@@ -146,10 +150,12 @@
                 width: 100%;
                 max-width: 95%;
                 padding: 10px;
+                transform: skewY(-2deg); /* Adjusted skew for even smaller screens */
             }
 
             .card h3 {
                 font-size: 1rem;
+                transform: skewY(2deg); /* Adjusted skew for even smaller screens */
             }
 
             .card h3 i {
@@ -158,6 +164,7 @@
 
             .card .wish {
                 font-size: 0.75rem;
+                transform: skewY(2deg); /* Adjusted skew for even smaller screens */
             }
 
             .card button {
