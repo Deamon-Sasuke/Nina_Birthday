@@ -243,7 +243,7 @@
             <button class="toggle-btn">Show Wish</button>
         </div>
     </div>
-
+    <audio id="birthdayAudio" src="Birthday.mp3" preload="auto"></audio>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
 document.querySelectorAll('.toggle-btn').forEach(button => {
@@ -262,6 +262,8 @@ document.querySelectorAll('.toggle-btn').forEach(button => {
                 spread: 70,
                 origin: { y: 0.6 }
             });
+                                    // Play birthday audio
+           document.getElementById('birthdayAudio').play();
         } else {
             wish.style.display = 'none';
             button.textContent = 'Show Wish'; // Only change the text of the clicked button
